@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cakeo0gurbkkg"]
+
+[ext_resource type="PackedScene" uid="uid://b4kad2kuba1yn" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_hand_low.tscn" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://l2n30mpbkdyw" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_hand_low.tscn" id="2_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="3_lquwl"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_7mycd"]
+size = Vector2(10, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_272bh"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="Sky" id="Sky_5vw27"]
+
+[sub_resource type="Environment" id="Environment_kek77"]
+background_mode = 2
+sky = SubResource("Sky_5vw27")
+
+[node name="Main" type="Node3D" unique_id=1635398134]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1085760338]
+
+[node name="Camera3D" type="Camera3D" parent="XROrigin3D" unique_id=2032187350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1655302, 0.41920137)
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D/Camera3D" unique_id=1888734897]
+transform = Transform3D(1, 0, 0, 0, 0.23660079, 0.97160697, 0, -0.97160697, 0.23660079, 0, 1.8, 0)
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=650115564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, 0)
+tracker = &"left_hand"
+pose = &"aim"
+
+[node name="LeftHand" parent="XROrigin3D/LeftController" unique_id=979965626 instance=ExtResource("1_h2yge")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.16658014, 0, 0)
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=1022628956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, 0)
+tracker = &"right_hand"
+pose = &"aim"
+
+[node name="RightHand" parent="XROrigin3D/RightController" unique_id=676348419 instance=ExtResource("2_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1667372, -0.03746128, 0)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=916641969]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=1459545005]
+mesh = SubResource("PlaneMesh_7mycd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground/MeshInstance3D" unique_id=846082251]
+shape = SubResource("BoxShape3D_272bh")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=767562947]
+transform = Transform3D(1, 0, 0, 0, 0.01055908, 0.99994427, 0, -0.99994427, 0.01055908, 0.017132238, 1.2507007, 0.014646947)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118611653]
+environment = SubResource("Environment_kek77")
+
+[node name="StartXR" parent="." unique_id=1219843693 instance=ExtResource("3_lquwl")]
